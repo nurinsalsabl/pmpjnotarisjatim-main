@@ -26,27 +26,36 @@ scope = [
     "https://www.googleapis.com/auth/spreadsheets"
 ]
 
-# --- Autentikasi Google (hybrid: lokal + Streamlit Cloud) ---
+# --- Autentikasi Google (Local + Streamlit Cloud) ---
 creds = None
 
+# LOCAL
 if os.path.exists("token.json"):
-    # st.info("🔑 Menggunakan token lokal (token.json)")
-    creds = Credentials.from_authorized_user_file("token.json", scopes=scope)
+    creds = Credentials.from_authorized_user_file(
+        "token.json",
+        scopes=scope
+    )
 
-elif "google" in st.secrets and "token" in st.secrets["google"]:
-    # st.info("☁️ Menggunakan token dari Streamlit Secrets")
+# STREAMLIT CLOUD
+elif "google" in st.secrets:
     creds_data = json.loads(st.secrets["google"]["token"])
-    creds = Credentials.from_authorized_user_info(creds_data, scopes=scope)
 
+    creds = Credentials.from_authorized_user_info(
+        creds_data,
+        scopes=scope
+    )
+
+# REFRESH TOKEN JIKA EXPIRED
 if creds and creds.expired and creds.refresh_token:
     creds.refresh(Request())
 
+# JIKA BELUM ADA TOKEN (KHUSUS LOCAL)
 if not creds:
-    st.warning("🔐 Token belum ada, buka login Google OAuth untuk membuat token.json (hanya di lokal).")
-    flow = InstalledAppFlow.from_client_secrets_file("credentials.json", scopes=scope)
-    creds = flow.run_local_server(port=0)
-    with open("token.json", "w") as token_file:
-        token_file.write(creds.to_json())
+    st.error(
+        "Token Google belum ditemukan. "
+        "Jalankan login OAuth di lokal dulu lalu masukkan token.json ke Streamlit Secrets."
+    )
+    st.stop()
 try:
     client = gspread.authorize(creds)
     # st.success("✅ Autentikasi Google Sheets berhasil!")
