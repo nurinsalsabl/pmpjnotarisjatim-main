@@ -99,7 +99,7 @@ if client:
     except Exception as e:
         # DIPERBAIKI: sebelumnya hanya menangkap gspread.SpreadsheetNotFound,
         # sehingga error jaringan/otentikasi lain membuat seluruh app crash.
-        st.error(f"❌ Gagal membuka spreadsheet: {e}")
+        #st.error(f"❌ Gagal membuka spreadsheet: {e}")
         sh = None
         worksheet = None
 else:
