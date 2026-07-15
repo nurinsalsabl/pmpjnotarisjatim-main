@@ -1106,7 +1106,7 @@ elif st.session_state.step == 9:
 
 
             if client is None:
-                st.error("❌ Gagal autentikasi Google Sheets. Data tidak disimpan.")
+                #st.error("❌ Gagal autentikasi Google Sheets. Data tidak disimpan.")
 
             else:
                 SPREADSHEET_NAME = "Kuisioner PMPJ Notaris FINAL 2026"
@@ -1178,7 +1178,7 @@ elif st.session_state.step == 9:
 
                         st.warning(
                             f"⚠️ Data lama untuk '{nama_baru}' "
-                            f"(NIK: {nik_baru}) ditemukan dan telah diperbarui. Tidak disarankan untuk klik kirim kuisioner lagi. Jika ingin memperbarui isi kuisiner silahkan refresh laman ini"
+                            f"(NIK: {nik_baru}) ditemukan dan telah diperbarui."
                         )
 
                     else:
@@ -1194,7 +1194,7 @@ elif st.session_state.step == 9:
 
                     st.success(
                         "✅ Data berhasil disimpan. "
-                        "Silakan screenshot laman ini sebagai bukti telah melakukan pengisian kuisioner PMPJ."
+                        "Silakan screenshot laman ini sebagai bukti telah melakukan pengisian kuisioner PMPJ. TIDAK DISARANKAN untuk klik 'kirim kuisioner' lagi. Jika ingin memperbarui isi kuisiner, silahkan refresh laman ini!"
                     )
 
                     # Reset wizard
