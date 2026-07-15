@@ -963,7 +963,7 @@ elif st.session_state.step == 9:
         missing = any(f is None or f == "" for f in required_fields)
 
         if missing:
-            st.error("⚠️ Semua data wajib diisi (kecuali dokumen pendukung).")
+            st.error("⚠️ Data anda sudah tersimpan apabila memperbarui isi kuisioner, silahkan refresh laman ini!")
         elif not NIK_KTP.isdigit() or not nomor_HP.isdigit():
             st.error("⚠️ NIK KTP dan Nomor HP harus berupa angka.")
         elif len(NIK_KTP) != 16:
