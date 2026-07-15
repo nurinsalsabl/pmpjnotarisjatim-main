@@ -74,7 +74,7 @@ if not creds:
         with open("token.json", "w") as token_file:
             token_file.write(creds.to_json())
     except Exception as e:
-        st.error(f"❌ Tidak dapat melakukan otentikasi Google: {e}")
+        #st.error(f"❌ Tidak dapat melakukan otentikasi Google: {e}")
         creds = None
 
 try:
