@@ -751,58 +751,36 @@ if submitted:
 
             worksheet = sh.sheet1  # sheet pertama
 
-            records = worksheet.get_all_records()
-            existing = pd.DataFrame(records)
+            existing_header = worksheet.row_values(1)
+            if not existing_header:
+                worksheet.append_row(column_order, value_input_option="RAW")
 
-            #buat header klo kosong
-            if existing.empty:
-                existing = pd.DataFrame(columns=column_order)
-
-            existing = existing.reindex(columns=column_order)
-
-            row_df = pd.DataFrame([data]).reindex(columns=column_order)
-
-            #cek duplikat (Nama + NIK)
-            #cek duplikat hanya berdasarkan NIK
             nama_baru = data.get("Nama Notaris", "")
             nik_baru = str(data.get("NIK KTP", "")).strip()
+            row_values = [str(data.get(col, "")) for col in column_order]
 
-            # --- Cek duplikat hanya berdasarkan NIK ---
-            if nik_baru and not existing.empty:
-                existing_nik_str = existing["NIK KTP"].astype(str).str.strip()
-                mask_duplikat = (existing_nik_str == nik_baru)
-            else:
-                mask_duplikat = pd.Series([False] * len(existing))
+            nik_col_idx = column_order.index("NIK KTP") + 1  
+            target_row = None
+            if nik_baru:
+                nik_column_values = worksheet.col_values(nik_col_idx)
+                for idx, val in enumerate(nik_column_values):
+                    if idx == 0:
+                        continue  
+                    if str(val).strip() == nik_baru:
+                        target_row = idx + 1 
+                        break
 
-            # --- kalo ada duplikat ---
-            if mask_duplikat.any():
-                #hapus data lama (NIK sama)
-                existing_filtered = existing[~mask_duplikat].copy()
-
-                df_all = pd.concat([existing_filtered, row_df], ignore_index=True)
-
+            if target_row:
+                last_col_letter = colnum_to_excel(len(column_order))
+                worksheet.update(f"A{target_row}:{last_col_letter}{target_row}", [row_values])
                 st.warning(
-                    f"⚠️ Data lama untuk '{nama_baru}' (NIK: {nik_baru}) ditemukan dan telah diganti."
+                    f"⚠️ Data lama untuk '{nama_baru}' (NIK: {nik_baru}) ditemukan dan telah diperbarui (baris {target_row})."
                 )
-
-            # --- kalo tidak duplikat ---
             else:
-                df_all = pd.concat([existing, row_df], ignore_index=True)
+                worksheet.append_row(row_values, value_input_option="RAW")
                 st.info(f"✅ Data baru untuk '{nama_baru}' ditambahkan.")
 
-            worksheet.clear()
-
-            header = list(column_order)
-            values = df_all.fillna("").astype(str).values.tolist()
-            data_to_write = [header] + values
-
-            resp = worksheet.update("A1", data_to_write)
-
-            if isinstance(resp, dict):
-                st.success(f"✅ Data berhasil disimpan. Silahkan screenshot laman ini sebagai bukti sudah melakukan pengisian kuisioner PMPJ")
-            # else:
-            #     st.success("✅ Data tersimpan ke Google Spreadsheet.")
-            #     st.write("Response:", resp)   # debug
+            st.success("✅ Data berhasil disimpan. Silahkan screenshot laman ini sebagai bukti sudah melakukan pengisian kuisioner PMPJ")
 
         except Exception as e:
             import traceback
