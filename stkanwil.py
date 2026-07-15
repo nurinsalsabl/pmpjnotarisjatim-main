@@ -855,16 +855,11 @@ elif st.session_state.step == 8:
 # =========================================================
 # STEP 9 — RINGKASAN & KIRIM
 # =========================================================
-    st.write("DEBUG IDENT")
-    st.write(answers["identitas"])
 elif st.session_state.step == 9:
     st.markdown('<div class="step-card">', unsafe_allow_html=True)
     st.markdown("<h2>9. Ringkasan & Kirim</h2>", unsafe_allow_html=True)
     st.markdown('<p class="step-subtext">Periksa kembali ringkasan berikut sebelum mengirim kuisioner.</p>', unsafe_allow_html=True)
 
-    # DIPERBAIKI: semua nilai diambil dari dictionary permanen `answers`,
-    # BUKAN dari st.session_state["key_widget"] langsung, karena key widget
-    # dari step-step sebelumnya sudah tidak ada lagi begitu step berpindah.
     ident = answers["identitas"]
     inputs_profil = answers["profil"]
     inputs_bisnis = answers["bisnis"]
