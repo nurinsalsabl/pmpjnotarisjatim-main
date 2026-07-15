@@ -1178,7 +1178,7 @@ elif st.session_state.step == 9:
 
                         st.warning(
                             f"⚠️ Data lama untuk '{nama_baru}' "
-                            f"(NIK: {nik_baru}) ditemukan dan telah diperbarui."
+                            f"(NIK: {nik_baru}) ditemukan dan telah diperbarui. Tidak disarankan untuk klik kirim kuisioner lagi. Jika ingin memperbarui isi kuisiner silahkan refresh laman ini"
                         )
 
                     else:
@@ -1204,5 +1204,5 @@ elif st.session_state.step == 9:
                     import traceback
 
                     st.error(
-                        f"❌ Error saat menyimpan:\n{traceback.format_exc()}"
+                        f"❌ Klik sekali lagi untuk menyimpan kuisioner. Error saat menyimpan:\n{traceback.format_exc()}"
                     )
