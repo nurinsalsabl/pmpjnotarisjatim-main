@@ -1106,7 +1106,7 @@ elif st.session_state.step == 9:
 
 
             if client is None:
-                #st.error("❌ Gagal autentikasi Google Sheets. Data tidak disimpan.")
+                st.error("❌ Silahkan refresh laman ini dan lakukan pengisian ulang.")
 
             else:
                 SPREADSHEET_NAME = "Kuisioner PMPJ Notaris FINAL 2026"
