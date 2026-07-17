@@ -650,7 +650,7 @@ if st.session_state.step == 1:
 elif st.session_state.step == 2:
     st.markdown('<div class="step-card">', unsafe_allow_html=True)
     st.markdown("<h2>2. Jumlah Klien sesuai Profesi</h2>", unsafe_allow_html=True)
-    st.markdown('<p class="step-subtext">Isi jumlah klien Tahun 2024–2025 berdasarkan profesi. Boleh dikosongkan (0) bila tidak ada.</p>', unsafe_allow_html=True)
+    st.markdown('<p class="step-subtext">Isi jumlah klien Tahun 2025-2026 berdasarkan profesi. Boleh dikosongkan (0) bila tidak ada.</p>', unsafe_allow_html=True)
 
     cols = st.columns(2)
     for i, k in enumerate(profil.keys()):
@@ -1034,7 +1034,7 @@ elif st.session_state.step == 9:
                 "Nomor HP": nomor_HP,
                 "2. Alamat Lengkap Kantor Notaris": alamat,
                 "Kedudukan Kota/Kabupaten": kota,
-                "3. Jumlah Klien Tahun 2024-2025": jumlah_klien,
+                "3. Jumlah Klien Tahun 2025-2026": jumlah_klien,
                 "Wilayah": wilayah_input
             }
             data.update({k: inputs_profil.get(k, 0) for k in profil.keys()})
@@ -1076,7 +1076,7 @@ elif st.session_state.step == 9:
 
             ident_cols = [
                 "Timestamp", "Nama Notaris", "NIK KTP", "Username Akun AHU Online", "Nomor HP", "Wilayah",
-                "2. Alamat Lengkap Kantor Notaris", "Kedudukan Kota/Kabupaten", "3. Jumlah Klien Tahun 2024-2025"
+                "2. Alamat Lengkap Kantor Notaris", "Kedudukan Kota/Kabupaten", "3. Jumlah Klien Tahun 2025-2026"
             ]
             ringkasan_cols = [
                 "Nilai Inherent Risk", "Tingkat Inherent Risk",
